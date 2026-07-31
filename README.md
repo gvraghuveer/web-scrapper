@@ -29,7 +29,7 @@ When you start the server for the first time, FastAPI automatically initializes 
 
 ```text
 ============================================================
-🔑 API Security Active! Active API Key: ws_live_995495f3b63ffee64397baec6f65f229
+🔑 API Security Active! Active API Key: ws_live_YOUR_API_KEY
 ============================================================
 ```
 
@@ -46,7 +46,7 @@ Holding an existing valid API key lets you generate new API keys dynamically for
 
 ```bash
 curl -X POST "http://localhost:8000/api/v1/keys/generate" \
-  -H "X-API-Key: ws_live_995495f3b63ffee64397baec6f65f229" \
+  -H "X-API-Key: ws_live_YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Frontend Web App",
@@ -62,12 +62,12 @@ You can pass your `ws_live_...` API key in either of two ways:
 
 1. **HTTP Header (Recommended)**:
    ```http
-   X-API-Key: ws_live_995495f3b63ffee64397baec6f65f229
+   X-API-Key: ws_live_YOUR_API_KEY
    ```
 
 2. **URL Query Parameter**:
    ```http
-   ?api_key=ws_live_995495f3b63ffee64397baec6f65f229
+   ?api_key=ws_live_YOUR_API_KEY
    ```
 
 ---
