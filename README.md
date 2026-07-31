@@ -22,26 +22,25 @@ A production-ready, high-performance Python microservice built with **FastAPI**,
 
 All API endpoints are strictly secured. Every request must include a valid active API key starting with **`ws_live_`** (Web Scraper Live).
 
-### 1. How to Get / Obtain Your API Key
+### 1. How to Obtain & Persist Your API Key
 
-#### Method A: Automatic Master Key (On Server Startup)
-When you start the server for the first time, FastAPI automatically initializes an active Master API Key and prints it to your server console logs:
+The server manages API keys using a prioritized hierarchy so your keys never change across redeploys or container restarts:
 
-```text
-============================================================
-🔑 API Security Active! Active API Key: ws_live_YOUR_API_KEY
-============================================================
-```
-
-#### Method B: Environment Variable (`API_KEY`)
-You can set your own custom master key by defining the `API_KEY` environment variable in your `.env` or deployment platform:
+#### Priority 1: Environment Variable (`API_KEY`) — Recommended for Cloud Deployment
+Set `API_KEY` in your `.env` file or cloud dashboard (Render/Railway Environment tab):
 
 ```env
 API_KEY=my_secret_passcode_2026
 ```
-*(The API will automatically prefix it as `ws_live_my_secret_passcode_2026` if no prefix is given).*
+*(The API automatically prefixes it as `ws_live_my_secret_passcode_2026` if no prefix is given and keeps it permanent forever across redeploys).*
 
-#### Method C: Dynamically Generate API Keys via Endpoint
+#### Priority 2: Persistent Seed File (`.master_key`)
+If no environment variable is set, the API reads from the repository's [`.master_key`](file:///d:/Codes/Own-Projects/amazon-scrapper/.master_key) file which defaults to:
+```text
+ws_live_default_master_key
+```
+
+#### Priority 3: Dynamically Generate API Keys via Endpoint
 Holding an existing valid API key lets you generate new API keys dynamically for different applications (e.g. Mobile App, Web Frontend):
 
 ```bash
@@ -58,16 +57,20 @@ curl -X POST "http://localhost:8000/api/v1/keys/generate" \
 
 ### 2. Passing the API Key in Requests
 
-You can pass your `ws_live_...` API key in either of two ways:
+You can pass your `ws_live_...` API key in any of the following ways:
 
 1. **HTTP Header (Recommended)**:
    ```http
    X-API-Key: ws_live_YOUR_API_KEY
    ```
 
-2. **URL Query Parameter**:
+2. **URL Query Parameter (Case-Insensitive)**:
    ```http
    ?api_key=ws_live_YOUR_API_KEY
+   ```
+   *or*
+   ```http
+   ?API_KEY=ws_live_YOUR_API_KEY
    ```
 
 ---

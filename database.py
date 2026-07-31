@@ -284,10 +284,23 @@ def revoke_api_key(api_key: str) -> bool:
 
 def ensure_default_api_key() -> str:
     """
-    Ensures at least one valid API key exists.
-    Uses os.getenv("API_KEY") if set, otherwise generates a default master key with 'ws_live_' prefix.
+    Ensures at least one valid API key exists in SQLite.
+    1. Highest Priority: os.getenv("API_KEY") (persists forever if set in Env vars / Render).
+    2. Priority 2: Existing active key in SQLite database.
+    3. Priority 3: Persistent '.master_key' file in project directory.
+    4. Priority 4: Fallback default master key.
     """
     init_db()
+
+    # Priority 1: Environment variable 'API_KEY' (Always overrides everything)
+    env_key = os.getenv("API_KEY")
+    if env_key and env_key.strip():
+        k = env_key.strip()
+        if not (k.startswith("ws_") or k.startswith("rs_")):
+            k = f"ws_live_{k}"
+        return create_api_key(name="Environment API Key", custom_key=k)
+
+    # Priority 2: Check existing active keys in SQLite database
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("SELECT api_key FROM api_keys WHERE is_active = 1 LIMIT 1")
@@ -297,12 +310,24 @@ def ensure_default_api_key() -> str:
     if row:
         return row[0]
 
-    env_key = os.getenv("API_KEY")
-    if env_key and env_key.strip():
-        k = env_key.strip()
-        if not (k.startswith("ws_") or k.startswith("rs_")):
-            k = f"ws_live_{k}"
-        return create_api_key(name="Environment API Key", custom_key=k)
-    else:
-        return create_api_key(name="Master API Key")
+    # Priority 3: Persistent master key file (.master_key)
+    key_file = os.path.join(os.path.dirname(__file__), ".master_key")
+    if os.path.exists(key_file):
+        try:
+            with open(key_file, "r", encoding="utf-8") as f:
+                saved_key = f.read().strip()
+                if saved_key:
+                    return create_api_key(name="Persistent Master Key", custom_key=saved_key)
+        except Exception:
+            pass
+
+    # Priority 4: Generate & save persistent default key
+    default_key = "ws_live_default_master_key"
+    try:
+        with open(key_file, "w", encoding="utf-8") as f:
+            f.write(default_key)
+    except Exception:
+        pass
+
+    return create_api_key(name="Master API Key", custom_key=default_key)
 
