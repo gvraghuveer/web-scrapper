@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+ENV/
+
+# Databases & SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# Local logs & output
+output/
+scratch/
+*.log
+.DS_Store
+
+# Environment & Secrets
+.env
+.env.local
