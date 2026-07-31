@@ -1180,7 +1180,7 @@ PROXY_URL = os.getenv("PROXY_URL")
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def scrape_amazon_products(driver: Driver, data: dict) -> list[dict]:
@@ -1193,7 +1193,7 @@ def scrape_amazon_products(driver: Driver, data: dict) -> list[dict]:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def scrape_flipkart_products(driver: Driver, data: dict) -> list[dict]:
@@ -1236,7 +1236,7 @@ def scrape_flipkart_products(driver: Driver, data: dict) -> list[dict]:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def scrape_amazon_deals(driver: Driver, data: dict) -> list[dict]:
@@ -1250,7 +1250,7 @@ def scrape_amazon_deals(driver: Driver, data: dict) -> list[dict]:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def scrape_amazon_bestsellers(driver: Driver, data: dict) -> list[dict]:
@@ -1273,7 +1273,7 @@ def scrape_amazon_bestsellers(driver: Driver, data: dict) -> list[dict]:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def scrape_amazon_product_details(driver: Driver, data: dict) -> dict:
@@ -1298,7 +1298,7 @@ def scrape_amazon_product_details(driver: Driver, data: dict) -> dict:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def track_amazon_price(driver: Driver, data: dict) -> dict:
@@ -1311,7 +1311,7 @@ def track_amazon_price(driver: Driver, data: dict) -> dict:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def track_flipkart_price(driver: Driver, data: dict) -> dict:
@@ -1324,7 +1324,7 @@ def track_flipkart_price(driver: Driver, data: dict) -> dict:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def fetch_historical_price_report(driver: Driver, data: dict) -> dict:
@@ -1347,7 +1347,7 @@ def fetch_historical_price_report(driver: Driver, data: dict) -> dict:
     user_agent=USER_AGENT,
     proxy=PROXY_URL,
     block_images=False,
-    reuse_driver=True,
+    reuse_driver=False,
     wait_for_complete_page_load=False,
 )
 def scrape_amazon_product_reviews(driver: Driver, data: dict) -> list[dict]:
